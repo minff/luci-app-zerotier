@@ -1,87 +1,87 @@
 # luci-app-zerotier
 
-LuCI for ZeroTier / ZeroTier 的 LuCI 管理界面
+LuCI interface for ZeroTier / ZeroTier’s LuCI management UI
 
-- 用于加入 ZeroTier 网络的 LuCI 管理界面
-- 使用脚本动态实现 NAT 功能（多子网互连），更具灵活、方便
-- 适用于 OpenWrt 官方和 [LEDE](https://github.com/coolsnowwolf/lede)
+*   A LuCI management interface used to join ZeroTier networks
+*   Uses scripts to dynamically implement NAT functionality (multi-subnet interconnection), making it more flexible and convenient
+*   Suitable for official OpenWrt and <https://github.com/coolsnowwolf/lede>
 
-本项目从 <https://github.com/coolsnowwolf/luci> 拷贝过来
+This project was copied from <https://github.com/coolsnowwolf/luci>
 
-因原项目[不支持且不考虑支持 fw4](https://github.com/coolsnowwolf/luci/pull/230)，所以克隆出来
+Because the original project <https://github.com/coolsnowwolf/luci/pull/230>, it was cloned out into this separate project.
 
-## Changelog / 更新日志
+## Changelog
 
 ### v2.2
 
-- 增加 srcnat 配置，实现旁路由模式的子网互连
-- 剔除重启 zerotier 服务的功能
-- 在配置页面使用 tab 区分常规与高级配置
+*   Added `srcnat` configuration to enable subnet interconnection in bypass-router mode
+*   Removed the function that restarts the ZeroTier service
+*   Added tabs in the configuration page to separate General and Advanced settings
 
 ### v2.1
 
-- 配置页面支持所有选项
+*   The configuration page now supports all available options
 
 ### v2.0
 
-从 2.0 开始，此包只做为 zeroiter 包的辅助
+Starting from 2.0, this package only serves as an auxiliary for the ZeroTier package
 
-- 需要使用用官方的 `packages/zerotier` 来启动 zerotier 服务
-- 辅助脚本只实现 NAT 的打开与关闭功能
+*   You must use the official `packages/zerotier` to start the ZeroTier service
+*   The helper script only provides enabling and disabling of NAT
 
 ### v1.1
 
-- 支持官方 OpenWrt 22.03+ 的 fw4 nftables
-- 支持官方 OpenWrt 中文使用 `po/zh_Hans`
-- 支持在非 luci 目录下也可以编译
-- 在使用官方 `imagebuilder` 时，解决[与包 package/zerotier 冲突](https://github.com/coolsnowwolf/luci/pull/172)
-- 修复部分问题:
-  - restart / reload 无法达到预期
-  - 在有静态路由时，停止服务无法删除 src nat 规则
+*   Supports official OpenWrt 22.03+ fw4 nftables
+*   Supports official OpenWrt Chinese localization `po/zh_Hans`
+*   Supports compilation even when not placed inside the luci directory
+*   When using the official `imagebuilder`, resolves the <https://github.com/coolsnowwolf/luci/pull/172>
+*   Fixed some issues:
+    *   `restart` / `reload` not working as expected
+    *   When static routes exist, stopping the service fails to remove src nat rules
 
-## Depends / 依赖
+## Depends
 
-- zerotier
-- luci-compat (For OpenWrt 官方 luci)
+*   zerotier
+*   luci-compat (For official OpenWrt LuCI)
 
-## Compile / 编译
+## Compile
 
 ```shell
-# 进入 OpenWrt SDK 目录，建议使用 Docker，如:
+# Enter the OpenWrt SDK directory, recommended to use Docker, for example:
 docker run -it -v $PWD/bin:/builder/bin openwrt/sdk:x86-64-22.03.5 bash
 
-# 要更新 feeds
-#   - 获取 feeds/luci/luci.mk
-#   - 获取依赖包 zerotier 编译信息 (feeds/packages/net)
-#   - 获取 feeds/luci/applications 目录
+# Update feeds
+#   - Fetch feeds/luci/luci.mk
+#   - Fetch build info for dependency zerotier (feeds/packages/net)
+#   - Fetch feeds/luci/applications directory
 ./scripts/feeds update -a
 
-# 拷贝到合适目录，如
+# Copy to the appropriate directory, for example:
 git clone --depth=1 https://github.com/zhengmz/luci-app-zerotier.git feeds/luci/applications/luci-app-zerotier
 
-# 加载
+# Load
 ./scripts/feeds update -f luci
 ./scripts/feeds install -p luci -f luci-app-zerotier
 make defconfig
 
-# 编译
+# Compile
 make package/luci-app-zerotier/compile
 
-# 结果
-# 存放在 bin/packages/x86_64/luci 目录
+# Results
+# Stored in bin/packages/x86_64/luci directory
 luci-app-zerotier*.ipk
 luci-i18n-zerotier-zh-cn*.ipk
 ```
 
-## Usage / 使用
+## Usage
 
 ```shell
-# 与 zerotier 服务有冲突，建议禁用，两种方式 (Only For v1.1)
+# It conflicts with the zerotier service; disabling is recommended. Two methods (Only for v1.1)
 
-# 1. 使用禁用命令
+# 1. Use the disable command
 /etc/init.d/zerotier disable
 
-# 2. 定制固件时增加参数
+# 2. Add the parameter when customizing firmware
 DISABLED_SERVICES="zerotier"
 ```
 
