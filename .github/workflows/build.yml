@@ -6,6 +6,6 @@ on:
 
 jobs:
   build:
-    uses: .github/workflows/build_reusable.yml
+    uses: ./.github/workflows/build_reusable.yml
     with:
       openwrt_branch: lede-17.01
