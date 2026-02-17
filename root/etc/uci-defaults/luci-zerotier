@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# ucitrack 只对非 PROCD 程序有效
+# ucitrack only works for non‑PROCD programs
 uci -q batch <<-EOF >/dev/null
 	delete ucitrack.@zerotier[-1]
 	add ucitrack zerotier
