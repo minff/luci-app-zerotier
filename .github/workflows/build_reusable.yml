@@ -58,8 +58,8 @@ jobs:
         working-directory: openwrt
         run: |
           # feeds applications update
-          ./scripts/feeds update luci-app-zerotier
-          ./scripts/feeds install luci-app-zerotier
+          ./scripts/feeds update -f luci
+          ./scripts/feeds install -p luci -f luci-app-zerotier
 
       - name: Configure (defconfig)
         working-directory: openwrt
