@@ -43,7 +43,7 @@ start() {
 	for i in ${zt_devs}
 	do
 		ip_segment=""
-		ip_segment="$(ip route | grep "dev $i proto kernel" | awk '{print $1}')"
+		ip_segment="$(ip route | grep "dev $i * proto kernel" | awk '{print $1}')"
 		if [ "$FW" = "fw3" ]; then
 			if iptables -S FORWARD | grep -sq "$i"; then
 				continue
