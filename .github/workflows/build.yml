@@ -4,11 +4,12 @@ on:
   push:
     branches: [ "dev" ]
   workflow_dispatch:
-    inputs:
-      openwrt_branch:
-        description: "OpenWrt branch to build (e.g., openwrt-23.05, master, lede-17.01)"
-        required: true
-        default: "lede-17.01"
+
+inputs:
+  openwrt_branch:
+    description: "OpenWrt branch to build (e.g., openwrt-23.05, master, lede-17.01)"
+    required: true
+    default: "lede-17.01"
 
 jobs:
   build:
