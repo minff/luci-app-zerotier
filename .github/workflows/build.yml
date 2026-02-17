@@ -1,6 +1,8 @@
 name: Build OpenWrt luci-app-zerotier Package
 
 on:
+  push:
+    branches: [ "dev" ]
   workflow_dispatch:
     inputs:
       openwrt_branch:
