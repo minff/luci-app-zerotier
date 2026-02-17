@@ -6,6 +6,7 @@ on:
       openwrt_branch:
         description: "OpenWrt branch to build (e.g., openwrt-23.05, master, lede-17.01)"
         required: true
+        type: string
         default: "lede-17.01"
 
 jobs:
