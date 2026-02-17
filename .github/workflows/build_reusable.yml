@@ -14,6 +14,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Clone OpenWrt sources
+        run: |
+          git clone --depth 1 --branch "${{ inputs.openwrt_branch }}" https://github.com/openwrt/openwrt.git
+
       - name: Checkout repository into OpenWrt tree
         uses: actions/checkout@v4
         with:
@@ -43,10 +47,6 @@ jobs:
           restore-keys: |
             toolchain-${{ inputs.openwrt_branch }}-
             toolchain-
-
-      - name: Clone OpenWrt sources
-        run: |
-          git clone --depth 1 --branch "${{ inputs.openwrt_branch }}" https://github.com/openwrt/openwrt.git
 
       - name: Prepare OpenWrt feeds
         working-directory: openwrt
