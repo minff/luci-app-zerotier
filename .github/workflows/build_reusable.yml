@@ -21,7 +21,7 @@ jobs:
       - name: Checkout repository into OpenWrt tree
         uses: actions/checkout@v4
         with:
-          path: openwrt/feeds/luci/applications/luci-app-zerotier
+          path: openwrt/package/luci/applications/luci-app-zerotier
           fetch-depth: 1
 
       - name: Install OpenWrt build dependencies
@@ -54,12 +54,12 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
-      - name: Add luci-app-zerotier package feed
-        working-directory: openwrt
-        run: |
-          # feeds applications update
-          ./scripts/feeds update -f luci
-          ./scripts/feeds install -p luci -f luci-app-zerotier
+      # - name: Add luci-app-zerotier package feed
+      #   working-directory: openwrt
+      #   run: |
+      #     # feeds applications update
+      #     ./scripts/feeds update -f luci
+      #     ./scripts/feeds install -p luci -f luci-app-zerotier
 
       - name: Configure (defconfig)
         working-directory: openwrt
